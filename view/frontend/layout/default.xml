@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Nayem (nayem323@gmail.com)
+ * @copyright Copyright (c) 2022 Nayem
+ * @package Elixir_Shoparize
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="before.body.end">
+            <block class="Elixir\Shoparize\Block\Shoparize" template="Elixir_Shoparize::shoparize.phtml" name="shoparize" after="-" cacheable="false"/>
+        </referenceContainer>
+    </body>
+</page>
