@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
 <!--
 /**
- * @author Nayem (nayem323@gmail.com)
- * @copyright Copyright (c) 2022 Nayem
- * @package Elixir_Shoparize
+ * @package Shoparize_Partner
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="Elixir_Shoparize" setup_version="1.0.0" />
+    <module name="Shoparize_Partner" setup_version="1.0.0" />
 </config>

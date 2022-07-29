@@ -1,11 +1,9 @@
 <?php
 /**
- * @author Nayem (nayem323@gmail.com)
- * @copyright Copyright (c) 2022 Nayem
- * @package Elixir_Shoparize
+ * @package Shoparize_Partner
  */
 
-namespace Elixir\Shoparize\Block;
+namespace Shoparize\Partner\Block;
 
 class Shoparize extends \Magento\Framework\View\Element\Template
 {
