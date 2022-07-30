@@ -164,8 +164,8 @@ class Shoparize extends \Magento\Framework\View\Element\Template
             'shoparize/general/enable',
             $this->getStoreId()
         );
-        $data['customerid'] = $this->getConfig(
-            'shoparize/general/customerid',
+        $data['partner_shop_id'] = $this->getConfig(
+            'shoparize/general/partner_shop_id',
             $this->getStoreId()
         );
         $data['full_action_name'] = $this->getRequest()->getFullActionName();
