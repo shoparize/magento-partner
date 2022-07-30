@@ -1,5 +1,7 @@
 <?php
 /**
+ * @author Nayem (nayem323@gmail.com)
+ * @copyright Copyright (c) 2022 Nayem
  * @package Shoparize_Partner
  */
 
@@ -161,11 +163,11 @@ class Shoparize extends \Magento\Framework\View\Element\Template
         $data = [];
     
         $data['enable'] = $this->getConfig(
-            'shoparize/general/enable',
+            'partner/general/enable',
             $this->getStoreId()
         );
-        $data['partner_shop_id'] = $this->getConfig(
-            'shoparize/general/partner_shop_id',
+        $data['customerid'] = $this->getConfig(
+            'partner/general/customerid',
             $this->getStoreId()
         );
         $data['full_action_name'] = $this->getRequest()->getFullActionName();

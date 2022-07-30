@@ -5,8 +5,8 @@
 <?php if($data['enable']) : ?>
     <script>
         require(['jquery', 'https://partner-cdn.shoparize.com/js/shoparize.js'], function($, shoparize) {
-            var partner_shop_id = '<?php echo $data['partner_shop_id']; ?>';
-            SHOPARIZE_API().init(partner_shop_id);
+            var customerId = '<?php echo $data['customerid']; ?>';
+            SHOPARIZE_API().init(customerId);
         });
     </script>
     <?php if ($action == 'checkout_onepage_success' || $action == 'onepagecheckout_index_success') : ?>
@@ -38,7 +38,7 @@
 		    <?php
 		    	echo "<script>";
 		            echo "var dataLayerShoparize = [" . json_encode($custom_order) . "];";
-		            echo "window.onload = function () {  SHOPARIZE_API().conv(".$data['partner_shop_id']."); }";
+		            echo "window.onload = function () {  SHOPARIZE_API().conv(".$data['customerid']."); }";
 		        echo "</script>";
 		    ?>
         <?php endif; ?>
