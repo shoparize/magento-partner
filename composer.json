@@ -2,7 +2,7 @@
   "name": "shoparize/magento-partner",
   "description": "A module that creates a new page",
   "type": "magento2-module",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "autoload": {
     "files": [
       "registration.php"
