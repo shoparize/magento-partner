@@ -17,12 +17,14 @@
             <tab>shoparize</tab>
             <resource>Shoparize_Partner::shoparize_config</resource>
             <group id="general" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                <comment>You should enable module and fill your Partner Shop ID after registering to partner.shoparize.com</comment>
                 <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable</label>
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
                 </field>
                 <field id="customerid" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Customer Id</label>
+                    <label>Shop Id</label>
+                    <comment>You can find your Partner Shop Id after logging in to partner.shoparize.com</comment>
                     <validate>required</validate>
                     <depends>
                         <field id="enable">1</field>

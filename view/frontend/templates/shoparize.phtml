@@ -2,9 +2,6 @@
     $data = $block->getShoparizeData();
     $action = $data['full_action_name'];
 ?>
-<script>
-    window.onload = function () { console.log("selamıunaleyküm");}
-</script>
 <?php if($data['enable']) : ?>
     <script>
         require(['jquery', 'https://partner-cdn.shoparize.com/js/shoparize.js'], function($, shoparize) {
