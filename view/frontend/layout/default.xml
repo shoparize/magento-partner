@@ -7,9 +7,14 @@
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <body>
-        <referenceContainer name="before.body.end">
-            <block class="Magento\Framework\View\Element\Template" template="Shoparize_Partner::test.phtml" name="shoparize" after="-" cacheable="false"/>
-        </referenceContainer>
-    </body>
+    <head>
+        <!-- Add js using link tag-->
+        <link src="js/script.js"/>
+
+        <!-- Add js-->
+        <script src="Vendor_Module::js/script.js"/>
+
+        <!-- Add external js -->
+        <script src="https://apis.google.com/js/platform.js" src_type="url" />
+    </head>
 </page>
