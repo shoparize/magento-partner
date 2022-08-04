@@ -2,7 +2,7 @@
   "name": "shoparize/magento-partner",
   "description": "Shoparize Partner Magento integration module",
   "type": "magento2-module",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "autoload": {
     "files": [
       "registration.php"
