@@ -3,12 +3,21 @@
   "description": "Shoparize Partner Magento integration module",
   "type": "magento2-module",
   "version": "1.0.0",
+  "license": ["GPL-3.0"],
+  "authors": [
+   {
+     "name": "Alper Cevik",
+     "email": "alper.cevik@shoparize.com",
+     "homepage": "https://shoparize.com",
+     "role": "Developer"
+   }
+  ],
   "autoload": {
     "files": [
       "registration.php"
     ],
     "psr-4": {
-      "Shoparize\\Partner\\": ""
+      "Shoparize\Partner\": ""
     }
   }
 }
