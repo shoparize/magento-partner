@@ -38,7 +38,7 @@
 		    <?php
 		    	echo "<script>";
 		            echo "var dataLayerShoparize = [" . json_encode($custom_order) . "];";
-		            echo "window.onload = function () {  SHOPARIZE_API().conv(".$data['customerid']."); }";
+		            echo "window.addEventListener('load', function () { SHOPARIZE_API().conv(".$data['customerid']."); });";
 		        echo "</script>";
 		    ?>
         <?php endif; ?>
