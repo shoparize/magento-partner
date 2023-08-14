@@ -1,27 +1,45 @@
 {
-  "name": "shoparize/magento-partner",
-  "description": "Shoparize Partner Magento integration module",
-  "type": "magento2-module",
-  "version": "1.0.2",
-  "license": ["GPL-3.0"],
-  "authors": [
-   {
-     "name": "Alper Cevik",
-     "email": "alper.cevik@shoparize.com",
-     "homepage": "https://shoparize.com",
-     "role": "Developer"
-   }
-  ],
-  "require": {
-    "php": "~7.4.0||~8.1.0",
-    "magento/framework": "~100.1|~101.0|~102.0|~103.0|~104.0"
-  },
-  "autoload": {
-    "files": [
-      "registration.php"
+    "name": "shoparize/magento-partner",
+    "description": "Shoparize Partner Magento integration module",
+    "type": "magento2-module",
+    "version": "1.0.2",
+    "license": [
+        "GPL-3.0"
     ],
-    "psr-4": {
-      "Shoparize\\Partner\\": ""
+    "authors": [
+        {
+            "name": "Alper Cevik",
+            "email": "alper.cevik@shoparize.com",
+            "homepage": "https://shoparize.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "~7.4.0||~8.2.0",
+        "magento/framework": "~100.1|~101.0|~102.0|~103.0|~104.0",
+        "shoparize/partner-plugin-product-api": "^1.0"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Shoparize\\Partner\\": ""
+        }
+    },
+    "repositories": {
+        "composer-magento": {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        },
+        "shoparize": {
+            "type": "vcs",
+            "url": "git@github.com:shoparize/partner-plugin-product-api.git"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "magento/composer-dependency-version-audit-plugin": true
+        }
     }
-  }
 }

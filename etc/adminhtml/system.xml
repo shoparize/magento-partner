@@ -30,6 +30,18 @@
                         <field id="enable">1</field>
                     </depends>
                 </field>
+                <field id="color" translate="label" type="select" sortOrder="6" showInDefault="1" canRestore="1">
+                    <label>Color Attribute</label>
+                    <source_model>Shoparize\Partner\Model\Config\Source\Attribute</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <comment>It need for understanding which attribute is color in the shop</comment>
+                </field>
+                <field id="size" translate="label" type="select" sortOrder="7" showInDefault="1" canRestore="1">
+                    <label>Size Attribute</label>
+                    <source_model>Shoparize\Partner\Model\Config\Source\Attribute</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <comment>It need for understanding which attribute is size in the shop</comment>
+                </field>
             </group>
         </section>
     </system>
