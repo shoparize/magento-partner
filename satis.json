@@ -1,0 +1,15 @@
+{
+  "name": "Magento Shoparize Partner",
+  "homepage": "https://partner.shoparize.com/",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/shoparize/magento-partner"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/shoparize/partner-plugin-product-api"
+    }
+  ],
+  "require-all": true
+}
