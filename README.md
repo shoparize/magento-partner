@@ -6,8 +6,8 @@
 cd /to/magento/shop/;
 
 # install repositories(need to get access)
-composer config repositories.shoparize_product_api vcs git@github.com:shoparize/partner-plugin-product-api.git;
-composer config repositories.shoparize_magento vcs git@github.com:shoparize/magento-partner.git;
+composer config repositories.shoparize_product_api composer https://github.com/shoparize/partner-plugin-product-api.git;
+composer config repositories.shoparize_magento composer https://github.com/shoparize/magento-partner.git;
 
 # install magento extension
 composer require shoparize/magento-partner:"^1.0";

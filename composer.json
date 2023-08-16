@@ -28,13 +28,13 @@
         }
     },
     "repositories": {
+        "shoparize_product_api": {
+            "type": "composer",
+            "url": "https://github.com/shoparize/partner-plugin-product-api.git"
+        },
         "composer-magento": {
             "type": "composer",
             "url": "https://repo.magento.com/"
-        },
-        "shoparize": {
-            "type": "vcs",
-            "url": "git@github.com:shoparize/partner-plugin-product-api.git"
         }
     },
     "config": {
