@@ -2,45 +2,51 @@
     $data = $block->getShoparizeData();
     $action = $data['full_action_name'];
 ?>
-<?php if($data['enable']) : ?>
+<?php if ($data['enable']): ?>
     <script>
         require(['jquery', 'https://partner-cdn.shoparize.com/js/shoparize.js'], function($, shoparize) {
-            var customerId = '<?php echo $data['customerid']; ?>';
+            var customerId = '<?= $block->escapeHtml($data['customerid']); ?>';
             SHOPARIZE_API().init(customerId);
         });
     </script>
-    <?php if ($action == 'checkout_onepage_success' || $action == 'onepagecheckout_index_success') : ?>
-    	<?php
-    	$orderData = $block->getOrderData();
-        if ($orderData !== null) : ?>
-        	<?php
-            	$orderItems = $orderData['items'];
-		        $custom_order = [
-		            'event' => 'purchase',
-		            'ecommerce' => [
-		                'transaction_id' => $orderData['id'],
-		                'value' => $orderData['value'],
-		                'tax' => $orderData['tax'],
-		                'shipping' => $orderData['shipping'],
-		                'currency' => $orderData['currency']
-		            ]
-		        ];
-		        foreach($orderItems as $item) {
-		            $custom_order['ecommerce']['items'][] = [
-		                'item_id' => $item['id'],
-		                'item_name' => $item['name'],
-		                'currency' => $orderData['currency'],
-		                'price' => $item['price'],
-		                'quantity' => $item['quantity']
-		            ];
-		        }
-		    ?>
-		    <?php
-		    	echo "<script>";
-		            echo "var dataLayerShoparize = [" . json_encode($custom_order) . "];";
-		            echo "window.addEventListener('load', function () { SHOPARIZE_API().conv(".$data['customerid']."); });";
-		        echo "</script>";
-		    ?>
+    <?php if ($action == 'checkout_onepage_success' || $action == 'onepagecheckout_index_success'): ?>
+        <?php
+        $orderData = $block->getOrderData();
+        if ($orderData !== null): ?>
+            <?php
+                $orderItems = $orderData['items'];
+                $custom_order = [
+                    'event' => 'purchase',
+                    'ecommerce' => [
+                        'transaction_id' => $orderData['id'],
+                        'value' => $orderData['value'],
+                        'tax' => $orderData['tax'],
+                        'shipping' => $orderData['shipping'],
+                        'currency' => $orderData['currency']
+                    ]
+                ];
+                foreach ($orderItems as $item) {
+                    $custom_order['ecommerce']['items'][] = [
+                        'item_id' => $item['id'],
+                        'item_name' => $item['name'],
+                        'currency' => $orderData['currency'],
+                        'price' => $item['price'],
+                        'quantity' => $item['quantity']
+                    ];
+                }
+                ?>
+            <?= "<script>
+                    var dataLayerShoparize = window.dataLayerShoparize || [];
+                    require(['jquery'], function($) {
+                        var orderData = '" . $block->escapeHtml(json_encode($custom_order)) . "';
+                        dataLayerShoparize.push(JSON.parse($('<textarea />').html(orderData).text()));
+                    });
+
+                    window.addEventListener('load', function () {
+                        SHOPARIZE_API().conv(".$block->escapeHtml($data['customerid']).");
+                    });
+                </script>";
+            ?>
         <?php endif; ?>
     <?php endif; ?>
 <?php endif; ?>

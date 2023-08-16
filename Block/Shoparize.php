@@ -1,9 +1,4 @@
 <?php
-/**
- * @author Nayem (nayem323@gmail.com)
- * @copyright Copyright (c) 2022 Nayem
- * @package Shoparize_Partner
- */
 
 namespace Shoparize\Partner\Block;
 
@@ -16,7 +11,9 @@ use Magento\Directory\Model\RegionFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Registry;
+use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Template;
+use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Tax\Model\Config;
 
@@ -25,7 +22,7 @@ class Shoparize extends Template
     /**
      * @var ScopeConfigInterface
      */
-    public $scopeConfig;
+    public ScopeConfigInterface $scopeConfig;
 
     /**
      * @var StoreManagerInterface
@@ -35,12 +32,12 @@ class Shoparize extends Template
     /**
      * @var Registry
      */
-    public $coreRegistry;
+    public Registry $coreRegistry;
 
     /**
      * @var Data
      */
-    public $catalogHelper;
+    public Data $catalogHelper;
 
     /**
      * @var Magento\Framework\App\Http\Context
@@ -50,81 +47,69 @@ class Shoparize extends Template
     /**
      * @var ProductFactory
      */
-    public $productFactory;
+    public ProductFactory $productFactory;
 
     /**
      * @var Session
      */
-    public $checkoutSession;
+    public Session $checkoutSession;
 
     /**
      * @var CustomerFactory
      */
-    public $customerFactory;
+    public CustomerFactory $customerFactory;
 
     /**
      * @var AddressFactory
      */
-    public $addressFactory;
+    public AddressFactory $addressFactory;
 
     /**
      * @var RegionFactory
      */
-    public $regionFactory;
+    public RegionFactory $regionFactory;
 
     /**
      * Tax config model
      *
      * @var Config
      */
-    public $taxConfig;
+    public Config $taxConfig;
 
     /**
-     * Tax display flag
-     *
      * @var null|int
      */
-    public $taxDisplayFlag = null;
+    public ?int $taxDisplayFlag = null;
 
     /**
-     * Tax catalog flag
-     *
      * @var null|int
      */
-    public $taxCatalogFlag = null;
+    public ?int $taxCatalogFlag = null;
 
     /**
-     * Store object
-     *
-     * @var null|\Magento\Store\Model\Store
+     * @var null|Store
      */
-    public $store = null;
+    public ?Store $store = null;
 
     /**
-     * Store ID
-     *
      * @var null|int
      */
-    public $storeId = null;
+    public ?int $storeId = null;
 
     /**
-     * Base currency code
-     *
      * @var null|string
      */
-    public $baseCurrencyCode = null;
+    public ?string $baseCurrencyCode = null;
 
     /**
-     * Current currency code
-     *
      * @var null|string
      */
-    public $currentCurrencyCode = null;
+    public ?string $currentCurrencyCode = null;
 
     /**
      * Constructor
      *
-     * @param Context $context
+     * @param Template\Context $context
      * @param Registry $coreRegistry
      * @param Data $catalogHelper
      * @param \Magento\Framework\App\Http\Context $httpContext
@@ -134,10 +119,11 @@ class Shoparize extends Template
      * @param AddressFactory $addressFactory
      * @param RegionFactory $regionFactory
      * @param Config $taxConfig
+     * @param UrlInterface $urlInterface
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
+        Template\Context $context,
         Registry $coreRegistry,
         Data $catalogHelper,
         \Magento\Framework\App\Http\Context $httpContext,
@@ -147,7 +133,7 @@ class Shoparize extends Template
         AddressFactory $addressFactory,
         RegionFactory $regionFactory,
         Config $taxConfig,
-        \Magento\Framework\UrlInterface $urlInterface,
+        UrlInterface $urlInterface,
         array $data = []
     ) {
         $this->scopeConfig     = $context->getScopeConfig();
@@ -260,7 +246,7 @@ class Shoparize extends Template
     /**
      * Returns store object
      *
-     * @return \Magento\Store\Model\Store
+     * @return Store
      */
     public function getStore()
     {

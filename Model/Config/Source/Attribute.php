@@ -12,8 +12,15 @@ use const _PHPStan_532094bc1\__;
 
 class Attribute implements OptionSourceInterface
 {
-    private $attributeRepository;
-    private $searchCriteria;
+    /**
+     * @var AttributeRepositoryInterface
+     */
+    private AttributeRepositoryInterface $attributeRepository;
+
+    /**
+     * @var SearchCriteriaBuilder
+     */
+    private SearchCriteriaBuilder $searchCriteria;
 
     /**
      * @param AttributeRepositoryInterface $attributeRepository
@@ -27,7 +34,11 @@ class Attribute implements OptionSourceInterface
         $this->searchCriteria = $searchCriteria;
     }
 
-
+    /**
+     * Return list of attributes
+     *
+     * @return array[]
+     */
     public function toOptionArray(): array
     {
         $searchCriteria = $this->searchCriteria->create();

@@ -2,40 +2,26 @@
 
 namespace Shoparize\Partner\Controller\Products;
 
-use Magento\Catalog\Api\ProductAttributeRepositoryInterface;
-use Magento\Catalog\Helper\Image;
-use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\Product\Interceptor;
 use Magento\Catalog\Model\ProductFactory;
-use Magento\Catalog\Model\ProductRepository;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magento\CatalogInventory\Model\Stock\StockItemRepository;
-use Magento\Eav\Model\Entity\Attribute;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\Template\Context;
-use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Shipping\Model\Config;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Bundle\Api\ProductLinkManagementInterface;
-use Magento\Framework\Api\SearchCriteriaBuilder;
-use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Framework\Api\FilterBuilder;
-use Magento\CatalogInventory\Model\Stock;
 
 use Shoparize\PartnerPluginProductApi\Responses\FeedResponse as ShoparizeProductApiResponse;
 use Shoparize\PartnerPluginProductApi\Responses\FeedItem;
 use Shoparize\PartnerPluginProductApi\Responses\FeedShipping;
 
-/**
- * Class Index
- */
 class Index implements HttpGetActionInterface
 {
     /**
@@ -128,7 +114,7 @@ class Index implements HttpGetActionInterface
     {
         if (!$this->isAllow()) {
             http_response_code(400);
-            exit;
+            return $this->jsonFactory->create()->setData(['message' => 'Forbidden']);
         }
 
         $page = $this->request->getParam('page', 1);
@@ -145,6 +131,8 @@ class Index implements HttpGetActionInterface
 
         $response = new ShoparizeProductApiResponse();
         /**
+         * List of products
+         *
          * @var Interceptor $item
          */
         foreach ($collection as $item) {
@@ -156,7 +144,11 @@ class Index implements HttpGetActionInterface
             $feedItem->setMobileLink($item->getProductUrl());
 
             $stockItem = $this->stockItemRepository->get($item->getId());
-            $feedItem->setAvailability($stockItem->getIsInStock() ? self::AVAILABILITY_IN_STOCK : self::AVAILABILITY_OUT_OF_STOCK);
+            $feedItem->setAvailability(
+                $stockItem->getIsInStock()
+                    ? self::AVAILABILITY_IN_STOCK
+                    : self::AVAILABILITY_OUT_OF_STOCK
+            );
             $feedItem->setPrice((float)$item->getPrice());
             $feedItem->setSalePrice((float)$item->getFinalPrice());
             $feedItem->setCurrencyCode($this->storeManager->getStore()->getCurrentCurrencyCode());
@@ -210,15 +202,7 @@ class Index implements HttpGetActionInterface
                     $sizes = [];
                     $colors = [];
                     foreach ($variants as $variant) {
-                        $sizeValue = $variant->getAttributeText($sizeAttrName);
-                        if (!in_array($sizeValue, $sizes)) {
-                            $sizes[] = $sizeValue;
-                        }
-
-                        $colorValue = $variant->getAttributeText($colorAttrName);
-                        if (!in_array($colorValue, $colors)) {
-                            $colors[] = $colorValue;
-                        }
+                        $this->getSizeColorValue($variant, $sizes, $colors);
                     }
 
                     $feedItem->setSizes($sizes);
@@ -238,15 +222,7 @@ class Index implements HttpGetActionInterface
                     foreach ($childrenOptions as $children) {
                         foreach ($children as $childId) {
                             $childProduct = $this->productFactory->create()->load($childId);
-                            $sizeValue = $childProduct->getAttributeText($sizeAttrName);
-                            if (!in_array($sizeValue, $sizes)) {
-                                $sizes[] = $sizeValue;
-                            }
-
-                            $colorValue = $childProduct->getAttributeText($colorAttrName);
-                            if (!in_array($colorValue, $colors)) {
-                                $colors[] = $colorValue;
-                            }
+                            $this->getSizeColorValue($childProduct, $sizes, $colors);
                         }
                     }
 
@@ -294,18 +270,57 @@ class Index implements HttpGetActionInterface
         return $this->jsonFactory->create()->setData($response);
     }
 
+    /**
+     * Check credentials to product api request
+     *
+     * @return bool
+     * @throws NoSuchEntityException
+     */
     public function isAllow(): bool
     {
         $header = strtoupper(str_replace('-', '_', 'Shoparize-Partner-Key'));
-        $shopId = $_SERVER['HTTP_' . $header] ?? null;
+        $shopId = $this->request->getHeader($header, null);
         if ($shopId != $this->scopeConfig->getValue(
-                'partner/general/customerid',
-                ScopeInterface::SCOPE_STORE,
-                $this->storeManager->getStore()->getId()
-            )) {
+            'partner/general/customerid',
+            ScopeInterface::SCOPE_STORE,
+            $this->storeManager->getStore()->getId()
+        )) {
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * Fill color, size values
+     *
+     * @param object $product
+     * @param array $sizes
+     * @param array $colors
+     * @return void
+     * @throws NoSuchEntityException
+     */
+    public function getSizeColorValue($product, &$sizes, &$colors)
+    {
+        $colorAttrName = $this->scopeConfig->getValue(
+            'partner/general/color',
+            ScopeInterface::SCOPE_STORE,
+            $this->storeManager->getStore()->getId()
+        );
+        $sizeAttrName = $this->scopeConfig->getValue(
+            'partner/general/size',
+            ScopeInterface::SCOPE_STORE,
+            $this->storeManager->getStore()->getId()
+        );
+
+        $sizeValue = $product->getAttributeText($sizeAttrName);
+        if ($sizeValue && !in_array($sizeValue, $sizes)) {
+            $sizes[] = $sizeValue;
+        }
+
+        $colorValue = $product->getAttributeText($colorAttrName);
+        if ($sizeValue && !in_array($colorValue, $colors)) {
+            $colors[] = $colorValue;
+        }
     }
 }
