@@ -4,7 +4,7 @@
 ?>
 <?php if ($data['enable']): ?>
     <script>
-        require(['jquery', 'https://partner-cdn.shoparize.com/js/shoparize.js'], function($, shoparize) {
+        require(['jquery', 'https://partner-cdn.shoparize.com/js/shoparize.js', 'domReady!'], function($) {
             var customerId = '<?= $block->escapeHtml($data['customerid']); ?>';
             SHOPARIZE_API().init(customerId);
         });
@@ -37,12 +37,9 @@
                 ?>
             <?= "<script>
                     var dataLayerShoparize = window.dataLayerShoparize || [];
-                    require(['jquery'], function($) {
+                    require(['jquery', 'https://partner-cdn.shoparize.com/js/shoparize.js', 'domReady!'], function($) {
                         var orderData = '" . $block->escapeHtml(json_encode($custom_order)) . "';
                         dataLayerShoparize.push(JSON.parse($('<textarea />').html(orderData).text()));
-                    });
-
-                    window.addEventListener('load', function () {
                         SHOPARIZE_API().conv(".$block->escapeHtml($data['customerid']).");
                     });
                 </script>";
