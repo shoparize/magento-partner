@@ -195,7 +195,7 @@ class Shoparize extends Template
             foreach ($items as $item) {
                 $products[$i]['sku'] = addslashes($item->getSku());
                 $products[$i]['id'] = $item->getProductId();
-                $products[$i]['quantity'] = round($item->getQtyOrdered(), 0);
+                $products[$i]['quantity'] = (int)$item->getQtyOrdered();
                 $products[$i]['name'] = addslashes($item->getName());
                 $products[$i]['price'] = $this->formatPrice($item->getPrice());
 
